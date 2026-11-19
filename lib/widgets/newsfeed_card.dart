@@ -1,22 +1,23 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../constants.dart';
 import 'custom_text.dart';
+import 'post_actions.dart';
 
 class NewsFeedCard extends StatelessWidget {
   final String userName;
   final String postContent;
   final String date;
   final int numOfLikes;
-  final bool hasImage;
+  final String? postImage;
+  final String? profileImage;
 
   const NewsFeedCard({
     super.key,
     required this.userName,
     required this.postContent,
     this.numOfLikes = 0,
-    this.hasImage = false,
+    this.postImage,
+    this.profileImage,
     required this.date,
   });
 
@@ -32,7 +33,13 @@ class NewsFeedCard extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Icon(Icons.person),
+                CircleAvatar(
+                  radius: 18,
+                  foregroundImage: profileImage == null
+                      ? null
+                      : AssetImage(profileImage!),
+                  child: const Icon(Icons.person),
+                ),
                 SizedBox(
                   width: ScreenUtil().setWidth(10),
                 ),
@@ -66,109 +73,29 @@ class NewsFeedCard extends StatelessWidget {
                     ),
                   ],
                 ),
-                Spacer(),
-                Icon(Icons.more_horiz),
+                const Spacer(),
+                const Icon(Icons.more_horiz),
               ],
             ),
-
             SizedBox(height: ScreenUtil().setHeight(5)),
 
-            // Post Content
+            // Post content
             CustomText(
               text: postContent,
               fontSize: ScreenUtil().setSp(12),
               color: Colors.black,
             ),
-
             SizedBox(height: ScreenUtil().setHeight(5)),
 
-            hasImage == true
-                ? const Placeholder()
-                : SizedBox(
-                    height: ScreenUtil().setHeight(1),
-                  ),
+            if (postImage != null)
+              Image.asset(
+                postImage!,
+                width: double.infinity,
+                fit: BoxFit.fitWidth,
+              ),
 
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                TextButton.icon(
-                  onPressed: () {
-                    print('Liked');
-                  },
-                  icon: const Icon(
-                    Icons.thumb_up,
-                    color: FB_DARK_PRIMARY,
-                  ),
-                  label: CustomText(
-                    text: numOfLikes.toString(),
-                    fontSize: ScreenUtil().setSp(12),
-                    color: FB_DARK_PRIMARY,
-                  ),
-                ),
-                TextButton.icon(
-                  onPressed: () {},
-                  icon: const Icon(
-                    Icons.comment,
-                    color: FB_DARK_PRIMARY,
-                  ),
-                  label: CustomText(
-                    text: 'Comment',
-                    fontSize: ScreenUtil().setSp(12),
-                    color: FB_DARK_PRIMARY,
-                  ),
-                ),
-                TextButton.icon(
-                  onPressed: () {},
-                  icon: const Icon(
-                    Icons.redo,
-                    color: FB_DARK_PRIMARY,
-                  ),
-                  label: CustomText(
-                    text: 'Share',
-                    fontSize: ScreenUtil().setSp(12),
-                    color: FB_DARK_PRIMARY,
-                  ),
-                ),
-              ],
-            ),
-
-            Row(
-              children: [
-                Icon(Icons.person),
-                SizedBox(
-                  width: ScreenUtil().setWidth(10),
-                ),
-                Container(
-                  padding: EdgeInsets.fromLTRB(
-                    ScreenUtil().setSp(10), 0, 0, 0),
-                  alignment: Alignment.centerLeft,
-                  height: ScreenUtil().setHeight(25),
-                  width: ScreenUtil().setWidth(330),
-                  decoration: BoxDecoration(
-                    color: Colors.grey[200],
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(ScreenUtil().setSp(10)),
-                    ),
-                  ),
-                  child: CustomText(
-                    text: 'Write a comment...',
-                    fontSize: ScreenUtil().setSp(11),
-                    color: Colors.grey,
-                  ),
-                ),
-              ],
-            ),
-
-            SizedBox(
-              height: ScreenUtil().setHeight(10),
-            ),
-
-            CustomText(
-              text: 'View comments',
-              fontSize: ScreenUtil().setSp(12),
-              fontWeight: FontWeight.bold,
-              color: Colors.black,
-            ),
+            // CHANGED: Enhancement 3. This replaces the old buttons and comment box.
+            PostActions(initialLikes: numOfLikes),
           ],
         ),
       ),
