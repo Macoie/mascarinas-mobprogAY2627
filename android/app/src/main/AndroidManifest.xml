@@ -1,6 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <application
-        android:label="mascarinas_mobprog"
+        android:label="InTeyvat"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

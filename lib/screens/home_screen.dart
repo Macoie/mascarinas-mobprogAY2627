@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../constants.dart';
 import '../screens/newsfeed_screen.dart';
 import '../widgets/custom_text.dart';
+import 'notification_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -22,7 +23,7 @@ class _HomeScreenState extends State<HomeScreen> {
         shadowColor: FB_TEXT_COLOR_WHITE,
         elevation: 2,
         title: CustomText(
-          text: 'facebook',
+          text: const ['InTeyvat', 'Notifications', 'Profile'][_selectedIndex],
           fontSize: ScreenUtil().setSp(25),
           color: FB_PRIMARY,
         ),
@@ -31,9 +32,23 @@ class _HomeScreenState extends State<HomeScreen> {
         controller: _pageController,
         children: const <Widget>[
           NewsFeedScreen(),
+          NotificationScreen(),
           Center(
-            child: Text('Notifications'),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              CircleAvatar(
+                radius: 44,
+                backgroundImage: AssetImage('assets/images/profile_traveler.jpg'),
+              ),
+              SizedBox(height: 12),
+              Text(
+                'Menma',
+                style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+              ),
+            ],
           ),
+        ),
         ],
         onPageChanged: (page) {
           setState(() {
@@ -54,7 +69,12 @@ class _HomeScreenState extends State<HomeScreen> {
             icon: Icon(Icons.notifications),
             label: 'Notifications',
           ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person),
+            label: 'Profile',
+          ),
         ],
+      
         selectedItemColor: FB_PRIMARY,
         currentIndex: _selectedIndex,
       ),

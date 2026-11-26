@@ -24,3 +24,8 @@ I added a separate `profileImage` parameter and used `CircleAvatar` to display e
 
 I created a reusable `PostActions` widget in `post_actions.dart`. Each post kept track of its own likes and comments. Tapping Like added one to the post’s count, and tapping it again returned the count to its starting value. Tapping Comment opened a text field, and each submitted comment appeared in a rounded bubble under the selected post.
 
+## Lab Activity 2
+
+For Lab Activity 2A, I updated my Flutter app, InTeyvat, to show 10 posts and 20 notifications. I stored the details in lists so I could add new entries without writing the same layout each time. Each post had its own date and like count. Venti’s post showed only text, while Rex Lapis’s post also showed a picture.
+
+One challenge was making the title match the tab I opened. I fixed this by using the selected tab to update the title when I tapped an icon or swiped between Home, Notifications, and Profile. I also chose navy, violet, and peach (UXITANCE 4 in Color Palette Sample). This is so that i can match the color with the actual game that I play which is Genshin Impact.
